@@ -1,0 +1,17 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+psycopg2-binary = "*"
+pandas = "*"
+python-dotenv = "*"
+
+[dev-packages]
+
+[scripts]
+"build" = "python -m main"
+
+[requires]
+python_version = "3.11"

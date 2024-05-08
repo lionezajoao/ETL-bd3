@@ -1,0 +1,23 @@
+version: '3'
+services:
+  prod:
+    image: lionezajoao/ETL-bd3
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/usr/src/app
+    env_file:
+      - .env
+
+    depends_on:
+      - database
+
+  database:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASS}
+      POSTGRES_DB: ${PG_DATABASE}
+    ports:
+      - "5432:5432"
