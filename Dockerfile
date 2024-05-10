@@ -6,8 +6,9 @@ RUN pip install pipenv
 
 COPY Pipfile Pipfile.lock ./
 
-RUN pipenv install --system --deploy
+RUN pipenv install
+RUN pipenv install psycopg2-binary
 
 COPY . .
 
-CMD ["pipenv", "run", "build"]
+CMD ["pipenv", "run", "prod"]

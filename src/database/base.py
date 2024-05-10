@@ -5,16 +5,16 @@ load_dotenv()
 
 from src.utils import logger, path
 
-class Database:
+class Base:
     def __init__(self):
         self.logger = logger
         self.path = path
 
-    def connect(self):
+    def connect(self, db_name=None):
         try:
             self.conn = psycopg2.connect(
                 host=os.environ.get("PG_HOST"),
-                database="postgres",
+                database=db_name if db_name else "postgres",
                 user=os.environ.get("PG_USER"),
                 password=os.environ.get("PG_PASS"),
                 port=os.environ.get("PG_PORT")
@@ -23,6 +23,14 @@ class Database:
             self.logger.info("Connected to database.")
         except Exception as e:
             self.logger.error(f"Error connecting to database, reason: {e}")
+
+    def switch_db(self, db_name):
+        try:
+            self.cur.execute(f"set search_path to {db_name}")
+            self.commit()
+            self.logger.info(f"Switched to {db_name} database.")
+        except Exception as e:
+            self.logger.error(f"Error switching database, reason: {e}")
 
     def close(self):
         self.cur.close()

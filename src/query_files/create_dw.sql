@@ -1,7 +1,4 @@
-create schema sales;
-
-
-create table sales.dim_customers (
+create table if not exists dim_customers (
     CUSTOMER_ID INTEGER PRIMARY KEY,
     CUST_FIRST_NAME VARCHAR,
     CUST_LAST_NAME VARCHAR,
@@ -23,16 +20,14 @@ create table sales.dim_customers (
     LOCATION_SRID INTEGER,
     LOCATION_X FLOAT,
     LOCATION_Y FLOAT
-)
-;
+);
 
-create table sales.dim_promotions (
+create table if not exists dim_promotions (
     PROMO_ID INTEGER PRIMARY KEY,
     PROMO_NAME VARCHAR
-)
-;
+);
 
-create table sales.dim_products (
+create table if not exists dim_products (
     PRODUCT_ID INTEGER PRIMARY KEY,
     PRODUCT_NAME VARCHAR,
     LANGUAGE_ID INTEGER,
@@ -51,7 +46,7 @@ create table sales.dim_products (
     CATEGORY_NAME VARCHAR
 );
 
-create table sales.dim_date(
+create table if not exists dim_date(
     SALES_DATE_ID INTEGER PRIMARY KEY,
     SALES_DATE DATE,
     SALES_YEAR INTEGER,
@@ -62,7 +57,7 @@ create table sales.dim_date(
     SALES_DAY_OF_YEAR INTEGER
 );
 
-create table sales.dim_salesrep(
+create table if not exists dim_salesrep(
     EMPLOYEE_ID INTEGER PRIMARY KEY,
     FIRST_NAME VARCHAR,
     LAST_NAME VARCHAR,
@@ -76,7 +71,7 @@ create table sales.dim_salesrep(
     DEPARTMENT_ID INTEGER
 );
 
-create table sales.sales(
+create table if not exists sales(
     SALES_ID INTEGER PRIMARY KEY,
     CUSTOMER_DIM_ID INTEGER,
     PROMO_DIM_ID INTEGER,
@@ -85,16 +80,16 @@ create table sales.sales(
     SALESREP_DIM_ID INTEGER,
     DOLLARS_SOLD FLOAT,
     QUANTITY_SOLD INTEGER,
-    FOREIGN KEY (CUSTOMER_DIM_ID) REFERENCES sales.dim_customers(CUSTOMER_ID),
-    FOREIGN KEY (PROMO_DIM_ID) REFERENCES sales.dim_promotions(PROMO_ID),
-    FOREIGN KEY (PRODUCT_DIM_ID) REFERENCES sales.dim_products(PRODUCT_ID),
-    FOREIGN KEY (SALES_DATE_DIM_ID) REFERENCES sales.dim_date(SALES_DATE_ID),
-    FOREIGN KEY (SALESREP_DIM_ID) REFERENCES sales.dim_salesrep(EMPLOYEE_ID)
+    FOREIGN KEY (CUSTOMER_DIM_ID) REFERENCES dim_customers(CUSTOMER_ID),
+    FOREIGN KEY (PROMO_DIM_ID) REFERENCES dim_promotions(PROMO_ID),
+    FOREIGN KEY (PRODUCT_DIM_ID) REFERENCES dim_products(PRODUCT_ID),
+    FOREIGN KEY (SALES_DATE_DIM_ID) REFERENCES dim_date(SALES_DATE_ID),
+    FOREIGN KEY (SALESREP_DIM_ID) REFERENCES dim_salesrep(EMPLOYEE_ID)
 );
 
-create sequence sales_id;
+create sequence if not exists sales_id;
 
-create table sales.sales(
+create table if not exists sales(
     SALES_ID INTEGER PRIMARY KEY DEFAULT nextval('sales_id'),
     CUSTOMER_DIM_ID INTEGER,
     PROMO_DIM_ID INTEGER,
@@ -103,9 +98,9 @@ create table sales.sales(
     SALESREP_DIM_ID INTEGER,
     DOLLARS_SOLD FLOAT,
     QUANTITY_SOLD INTEGER,
-    FOREIGN KEY (CUSTOMER_DIM_ID) REFERENCES sales.dim_customers(CUSTOMER_ID),
-    FOREIGN KEY (PROMO_DIM_ID) REFERENCES sales.dim_promotions(PROMO_ID),
-    FOREIGN KEY (PRODUCT_DIM_ID) REFERENCES sales.dim_products(PRODUCT_ID),
-    FOREIGN KEY (SALES_DATE_DIM_ID) REFERENCES sales.dim_date(SALES_DATE_ID),
-    FOREIGN KEY (SALESREP_DIM_ID) REFERENCES sales.dim_salesrep(EMPLOYEE_ID)
+    FOREIGN KEY (CUSTOMER_DIM_ID) REFERENCES dim_customers(CUSTOMER_ID),
+    FOREIGN KEY (PROMO_DIM_ID) REFERENCES dim_promotions(PROMO_ID),
+    FOREIGN KEY (PRODUCT_DIM_ID) REFERENCES dim_products(PRODUCT_ID),
+    FOREIGN KEY (SALES_DATE_DIM_ID) REFERENCES dim_date(SALES_DATE_ID),
+    FOREIGN KEY (SALESREP_DIM_ID) REFERENCES dim_salesrep(EMPLOYEE_ID)
 );

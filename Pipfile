@@ -11,7 +11,7 @@ python-dotenv = "*"
 [dev-packages]
 
 [scripts]
-"build" = "python -m main"
+prod = "python -m main"
 
 [requires]
 python_version = "3.11"

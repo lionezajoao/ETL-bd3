@@ -1,7 +1,7 @@
 version: '3'
 services:
-  prod:
-    image: lionezajoao/ETL-bd3
+  ETL:
+    image: lionezajoao/etl-bd3
     build:
       context: .
       dockerfile: Dockerfile
@@ -15,9 +15,15 @@ services:
 
   database:
     image: postgres:16
+    volumes:
+      - ./data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: ${PG_USER}
       POSTGRES_PASSWORD: ${PG_PASS}
-      POSTGRES_DB: ${PG_DATABASE}
+      POSTGRES_DB: "postgres"
     ports:
       - "5432:5432"
+
+networks:
+  default:
+    driver: bridge
