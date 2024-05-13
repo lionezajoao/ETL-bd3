@@ -30,7 +30,7 @@ create table if not exists dim_promotions (
 create table if not exists dim_products (
     PRODUCT_ID INTEGER PRIMARY KEY,
     PRODUCT_NAME VARCHAR,
-    LANGUAGE_ID INTEGER,
+    LANGUAGE_ID VARCHAR,
     MIN_PRICE FLOAT,
     LIST_PRICE FLOAT,
     PRODUCT_STATUS VARCHAR,
@@ -47,7 +47,7 @@ create table if not exists dim_products (
 );
 
 create table if not exists dim_date(
-    SALES_DATE_ID INTEGER PRIMARY KEY,
+    SALES_DATE_ID BIGINT PRIMARY KEY,
     SALES_DATE DATE,
     SALES_YEAR INTEGER,
     SALES_MONTH INTEGER,
@@ -72,7 +72,7 @@ create table if not exists dim_salesrep(
 );
 
 create table if not exists sales(
-    SALES_ID INTEGER PRIMARY KEY,
+    SALES_ID SERIAL PRIMARY KEY,
     CUSTOMER_DIM_ID INTEGER,
     PROMO_DIM_ID INTEGER,
     PRODUCT_DIM_ID INTEGER,

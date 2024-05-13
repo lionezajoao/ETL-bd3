@@ -16,13 +16,16 @@ services:
   database:
     image: postgres:16
     volumes:
-      - ./data:/var/lib/postgresql/data
+      - data_volume:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: ${PG_USER}
       POSTGRES_PASSWORD: ${PG_PASS}
       POSTGRES_DB: "postgres"
     ports:
       - "5432:5432"
+
+volumes:
+  data_volume:
 
 networks:
   default:

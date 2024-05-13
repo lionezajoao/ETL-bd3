@@ -1,14 +1,12 @@
 import os
 import psycopg2
 from dotenv import load_dotenv
+from src.utils import Utils
 load_dotenv()
 
-from src.utils import logger, path
-
-class Base:
+class Base(Utils):
     def __init__(self):
-        self.logger = logger
-        self.path = path
+        super().__init__()
 
     def connect(self, db_name=None):
         try:
@@ -56,6 +54,7 @@ class Base:
             self.logger.debug("Data inserted successfully.")
         except Exception as e:
             self.logger.error(f"Error inserting data, reason: {e}")
+            raise e
 
     def update(self, query, params=None):
         try:
